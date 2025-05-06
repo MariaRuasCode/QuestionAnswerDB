@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: Q&A API
+  version: 1.0.0
+
+paths:
+  /questions/{question_id}/end:
+    post:
+      summary: End a question with a final answer
+      parameters:
+        - name: question_id
+          in: path
+          required: true  
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                status:
+                  type: string
+                  enum: [normal, spoiler, no_comment, hold_onto_that]
+                  default: normal
+                is_followup:
+                  type: boolean
+                  default: false
+                order:
+                  type: integer
+                  default: 1
+              required:
+                - content
+                - status
+                - is_followup
+                - order
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '404':
+          description: Question Not Found

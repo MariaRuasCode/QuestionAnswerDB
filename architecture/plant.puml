@@ -1,0 +1,59 @@
+@startuml
+
+class tag_types {
+  +id : SERIAL
+  +name : TEXT
+}
+
+class tags {
+  +id : SERIAL
+  +tag_type_id : INTEGER
+  +value : TEXT
+}
+
+class questions {
+  +id : SERIAL
+  +content : TEXT
+  +author : TEXT
+  +source : TEXT
+  +season : INT
+  +episode : INT
+  +timestamp : TIMESTAMP
+}
+
+class question_tags {
+  +question_id : INTEGER
+  +tag_id : INTEGER
+}
+
+class answers {
+  +id : SERIAL
+  +question_id : INTEGER
+  +content : TEXT
+  +status : answer_status
+  +timestamp : TIMESTAMP
+  +is_followup : BOOLEAN
+  +"order" : INT
+}
+
+' Now attach the ENUM note
+note top of answers
+  Enum: answer_status
+  - normal
+  - spoiler
+  - no_comment
+  - hold_onto_that
+end note
+
+' Relationships
+tags --> tag_types : tag_type_id
+question_tags --> questions : question_id
+question_tags --> tags : tag_id
+answers --> questions : question_id
+
+' Index note
+note bottom of answers
+  INDEX ON status
+end note
+
+@enduml
