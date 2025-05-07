@@ -42,7 +42,7 @@ CREATE TABLE question_tags (
     PRIMARY KEY (question_id, tag_id)
 );
 
--- 6. Updated Answers Table with Status
+-- 6. Answers Table with Status
 CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     question_id INTEGER NOT NULL REFERENCES questions(id),
